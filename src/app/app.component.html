@@ -1,0 +1,110 @@
+<div>
+  <button class="btn btn-lg btn-outline-primary" id="btn" (click)="open(addcontent)">Add</button>
+  <button class="btn btn-lg btn-outline-primary" id="editbtn" (click)="edit(editcontent)" style="display: none;">Edit</button>
+  <button class="btn btn-lg btn-outline-primary" id="delbtn" (click)="del(deletecontent)" style="display: none;">Delete</button>
+  <button class="btn btn-lg btn-outline-primary" id="pdfbtn" (click)="open(pdfcontent)" style="display: none;">Delete</button>
+</div>
+<ag-grid-angular #agGrid style="width: 1250px; height: 500px;" class="ag-theme-alpine" 
+[rowData]="rowData"
+  (gridReady)="onGridReady($event)" [editType]="'fullRow'" (rowEditingStopped)="onRowEditingStopped"
+  [frameworkComponents]="frameworkComponents" [columnDefs]="columnDefs">
+</ag-grid-angular>
+
+<ng-template #addcontent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Signed</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker #dp1="ngbDatepicker" [(ngModel)]='sdate' name="sdate" >
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp1.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Expires</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd"ngbDatepicker #dp2="ngbDatepicker"  [(ngModel)]='edate' name="edate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp2.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="addToArray()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #editcontent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="dateOfBirth">Signed</label>
+        <!-- <div>{{modalContent[0].sdate.year}}</div> -->
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker #dp1="ngbDatepicker" [(ngModel)]='sdate' name="sdate" >
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp1.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="dateOfBirth">Expires</label>
+        <div class="input-group">
+          <input class="form-control" placeholder="yyyy-mm-dd" ngbDatepicker #dp2="ngbDatepicker"  [(ngModel)]='edate' name="edate">
+          <div class="input-group-append">
+            <button class="btn btn-outline-secondary calendar" (click)="dp2.toggle()" type="button"></button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="editToArray()">Save</button>
+  </div>
+</ng-template>
+
+<ng-template #deletecontent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Delete</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="deleteToArray()">Delete</button>
+  </div>
+</ng-template>
+
+<ng-template #pdfcontent let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">PDF</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body" style="    height: 400px;
+  overflow: hidden;">
+    <pdf-viewer src="./assets/dummy.pdf"
+              [render-text]="true"
+              ></pdf-viewer>
+  </div>
+  
+</ng-template>
